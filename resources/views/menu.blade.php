@@ -75,6 +75,45 @@
             margin-bottom: 1rem;
             color: #ccc;
         }
+        .success-modal-content {
+            border-radius: 20px;
+            text-align: center;
+            padding: 3rem 2rem;
+            border: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background-color: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .success-modal-content .modal-header {
+            border: none;
+            padding: 0;
+        }
+        .success-modal-content .modal-body {
+            padding: 0;
+        }
+        .success-modal-content h5 {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .success-modal-content p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        .success-modal-content .btn {
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -131,7 +170,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header bg-warning">
-                                        <h5 class="modal-title text-dark">💬 Pesan {{ $c->nama_menu }}</h5>
+                                        <h5 class="modal-title text-dark"> Pesan {{ $c->nama_menu }}</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <form action="{{ route('orders.store') }}" method="POST" onsubmit="return submitOrder(event, '{{ $c->id }}', '{{ $c->link_wa }}')">
@@ -140,17 +179,17 @@
                                             <input type="hidden" name="cireng_id" value="{{ $c->id }}">
                                             
                                             <div class="mb-3">
-                                                <label for="nama_pelanggan_{{ $c->id }}" class="form-label">📝 Nama Anda</label>
+                                                <label for="nama_pelanggan_{{ $c->id }}" class="form-label"> Nama Anda</label>
                                                 <input type="text" class="form-control" id="nama_pelanggan_{{ $c->id }}" name="nama_pelanggan" placeholder="Contoh: Budi Santoso" required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="quantity_{{ $c->id }}" class="form-label">🔢 Jumlah Pesan</label>
+                                                <label for="quantity_{{ $c->id }}" class="form-label"> Jumlah Pesan</label>
                                                 <input type="number" class="form-control" id="quantity_{{ $c->id }}" name="quantity" value="1" min="1" required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="pesan_{{ $c->id }}" class="form-label">💬 Pesan Tambahan (Opsional)</label>
+                                                <label for="pesan_{{ $c->id }}" class="form-label"> Pesan Tambahan (Opsional)</label>
                                                 <textarea class="form-control" id="pesan_{{ $c->id }}" rows="3" name="pesan_tambahan" placeholder="Catatan atau permintaan khusus..."></textarea>
                                             </div>
 
@@ -165,7 +204,7 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                             <button type="submit" class="btn btn-warning text-dark fw-bold">
-                                                💬 Pesan Sekarang
+                                                 Pesan Sekarang
                                             </button>
                                         </div>
                                     </form>
@@ -233,6 +272,22 @@
         </div>
     </section>
 
+    <!-- SUCCESS MODAL -->
+    <div class="modal fade" id="successModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content success-modal-content">
+                <div class="success-icon">✅</div>
+                <div class="modal-body">
+                    <h5>Pesanan Berhasil!</h5>
+                    <p id="successMessage">Pesanan Anda telah disimpan dan WhatsApp akan membuka secara otomatis.</p>
+                </div>
+                <div class="modal-footer" style="border-top: none; justify-content: center;">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-cream py-4 mt-5 text-center">
         <div class="container">
             <p class="mb-0 text-dark-cream">&copy; Warung Cireng Munu'u</p>
@@ -289,15 +344,15 @@
                     // Build WhatsApp message
                     let message = `Halo, saya ${nama}\n\n`;
                     message += `Saya ingin memesan:\n`;
-                    message += `📦 Produk: ${data.nama_produk}\n`;
-                    message += `🔢 Jumlah: ${quantity} porsi\n`;
-                    message += `💰 Total: Rp ${data.total_harga_format}\n`;
+                    message += ` Produk: ${data.nama_produk}\n`;
+                    message += ` Jumlah: ${quantity}\n`;
+                    message += ` Total: Rp ${data.total_harga_format}\n`;
                     
                     if (pesan && pesan.trim()) {
-                        message += `\n📝 Catatan: ${pesan}`;
+                        message += `\n Catatan: ${pesan}`;
                     }
                     
-                    message += `\n\nTerima kasih! 🙏`;
+                    message += `\n\nTerima kasih!`;
                     
                     // Extract phone number from WhatsApp link
                     const phoneNumber = whatsappLink.replace('https://wa.me/', '').split('?')[0];
@@ -311,13 +366,15 @@
                         modal.hide();
                     }
                     
-                    // Show success alert
-                    alert('✅ Pesanan berhasil! WhatsApp akan terbuka...');
+                    // Show success modal
+                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    document.getElementById('successMessage').innerHTML = `✅ Pesanan untuk <strong>${data.nama_produk}</strong> berhasil disimpan!`;
+                    successModal.show();
                     
-                    // Open WhatsApp
+                    // Open WhatsApp after 1.5 seconds
                     setTimeout(() => {
                         window.open(whatsappUrl, '_blank');
-                    }, 500);
+                    }, 1500);
                     
                     // Reset form
                     form.reset();
