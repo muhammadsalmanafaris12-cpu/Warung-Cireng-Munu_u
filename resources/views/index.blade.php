@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Warung Cireng Munu'u</title>
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYU9LwFCCN7cc2xMeJ5q9cIkhSYFgmjkm2Dmc-1eDWLlMw5xBDxnu-oArZq2mdBRyctcylOtc6H8CzoOi_-XJ1lQY6AYJRJiz75g-cLxBFPOhT91ClqY5bGYZkJ1MWgVaZt7l46Ffdz3FLbx4db2OxpcJU6xisJJu0mVN-hvPhcGSI8-ES7fdqR_smi1Dv/s1024/Gemini_Generated_Image_9c4jmm9c4jmm9c4j.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #f8f9fa; }
-        .navbar { background-color: #dc3545 !important; }
+        .bg-cream { background-color: #f5f5dc !important; }
+        .text-dark-cream { color: #333 !important; }
+        .navbar { background-color: #f5f5dc !important; }
         .card-cireng {
             transition: transform 0.3s, box-shadow 0.3s;
             border: none;
@@ -26,7 +29,7 @@
         }
         .price {
             font-size: 1.5rem;
-            color: #dc3545;
+            color: #ffc107;
             font-weight: 700;
         }
         .btn-action {
@@ -34,8 +37,8 @@
             font-size: 0.85rem;
         }
         .page-header {
-            background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%);
-            color: white;
+            background: linear-gradient(135deg, #ffc107 0%, #ffdb58 100%);
+            color: #333;
             padding: 2rem 0;
             margin-bottom: 2rem;
         }
@@ -49,7 +52,7 @@
         .form-section h3 {
             color: #333;
             margin-bottom: 1.5rem;
-            border-bottom: 3px solid #dc3545;
+            border-bottom: 3px solid #ffc107;
             padding-bottom: 0.5rem;
         }
         .form-group label {
@@ -57,13 +60,15 @@
             color: #333;
         }
         .btn-submit {
-            background-color: #dc3545;
+            background-color: #ffc107;
             border: none;
             padding: 0.75rem 2rem;
             font-weight: 600;
+            color: #333;
         }
         .btn-submit:hover {
-            background-color: #c82333;
+            background-color: #e0a800;
+            color: #333;
         }
         .alert-success { background-color: #d4edda; border-color: #c3e6cb; }
         .alert-error { background-color: #f8d7da; border-color: #f5c6cb; }
@@ -88,16 +93,16 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #f5f5dc !important;">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">🍴 Cireng Munu'u - Admin</a>
+            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;">Cireng Munu'u - Admin</a>
             <div class="ms-auto">
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-light btn-sm me-2">📊 Dashboard</a>
-                <a href="{{ route('menu') }}" class="btn btn-outline-light btn-sm me-2">Lihat Menu</a>
-                <a href="/" class="btn btn-outline-light btn-sm me-2">Home</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm me-2">📊 Dashboard</a>
+                <a href="{{ route('menu') }}" class="btn btn-outline-secondary btn-sm me-2">Lihat Menu</a>
+                <a href="/" class="btn btn-outline-secondary btn-sm me-2">Home</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
-                    <button type="submit" class="btn btn-danger btn-sm">🚪 Logout</button>
+                    <button type="submit" class="btn btn-warning btn-sm">🚪 Logout</button>
                 </form>
             </div>
         </div>
@@ -105,7 +110,7 @@
 
     <div class="page-header">
         <div class="container">
-            <h1 class="display-5 fw-bold">Admin Dashboard</h1>
+            <h1 class="display-5 fw-bold">Admin Edit Daftar Menu</h1>
             <p class="lead">Kelola menu cireng dengan mudah</p>
         </div>
     </div>
@@ -166,8 +171,8 @@
 
                                 <!-- Action Buttons -->
                                 <div class="d-flex gap-2 mt-auto">
-                                    <a href="{{ $c->link_wa }}" target="_blank" class="btn btn-success flex-grow-1 btn-action">
-                                        💬 WhatsApp
+                                    <a href="{{ $c->link_wa }}" target="_blank" class="btn btn-warning flex-grow-1 btn-action">
+                                         WhatsApp
                                     </a>
                                     <button type="button" class="btn btn-edit btn-action" 
                                         data-bs-toggle="modal" 
@@ -188,9 +193,9 @@
                     <div class="modal fade" id="editModal{{ $c->id }}" tabindex="-1">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header bg-danger text-white">
+                                <div class="modal-header bg-warning text-dark">
                                     <h5 class="modal-title">✏️ Edit Menu: {{ $c->nama_menu }}</h5>
-                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <form action="{{ route('cireng.update', $c->id) }}" method="POST">
                                     @csrf
@@ -219,7 +224,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-danger">💾 Simpan Perubahan</button>
+                                        <button type="submit" class="btn btn-warning text-dark">💾 Simpan Perubahan</button>
                                     </div>
                                 </form>
                             </div>
@@ -238,9 +243,9 @@
 
     </div>
 
-    <footer class="bg-dark text-white py-4 mt-5 text-center">
+    <footer class="bg-cream py-4 mt-5 text-center">
         <div class="container">
-            <p class="mb-0">&copy; 2024 Warung Cireng Munu'u - Admin Dashboard</p>
+            <p class="mb-0 text-dark-cream">&copy; Warung Cireng Munu'u - Admin</p>
             <p class="text-secondary mt-2">Renyah & Gurih! 🔥</p>
         </div>
     </footer>

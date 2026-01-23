@@ -21,6 +21,13 @@ class CirengController extends Controller
         $totalOrders = \App\Models\Order::count();
         $totalProdukTerjual = \App\Models\Order::sum('quantity'); // Total quantity dari semua pesanan
         
+        // Data produk terlaris (paling banyak terjual)
+        $topProducts = \App\Models\Order::selectRaw('nama_produk, SUM(quantity) as total_qty')
+            ->groupBy('nama_produk')
+            ->orderByDesc('total_qty')
+            ->limit(3)
+            ->get();
+        
         // Data untuk kategori chart
         $categoryData = [
             'labels' => $cirengs->groupBy('kategori')->keys()->toArray(),
@@ -29,7 +36,7 @@ class CirengController extends Controller
             })->values()->toArray()
         ];
         
-        return view('dashboard', compact('cirengs', 'orders', 'totalMenu', 'totalRevenue', 'averagePrice', 'totalStok', 'totalOrders', 'totalProdukTerjual', 'categoryData'));
+        return view('dashboard', compact('cirengs', 'orders', 'totalMenu', 'totalRevenue', 'averagePrice', 'totalStok', 'totalOrders', 'totalProdukTerjual', 'topProducts', 'categoryData'));
     }
 
     public function index()

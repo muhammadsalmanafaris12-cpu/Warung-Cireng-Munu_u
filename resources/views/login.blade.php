@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - Warung Cireng Munu'u</title>
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYU9LwFCCN7cc2xMeJ5q9cIkhSYFgmjkm2Dmc-1eDWLlMw5xBDxnu-oArZq2mdBRyctcylOtc6H8CzoOi_-XJ1lQY6AYJRJiz75g-cLxBFPOhT91ClqY5bGYZkJ1MWgVaZt7l46Ffdz3FLbx4db2OxpcJU6xisJJu0mVN-hvPhcGSI8-ES7fdqR_smi1Dv/s1024/Gemini_Generated_Image_9c4jmm9c4jmm9c4j.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%);
+            background: linear-gradient(135deg, #ffc107 0%, #ffdb58 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,8 +27,8 @@
             background: white;
         }
         .login-header {
-            background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%);
-            color: white;
+            background: linear-gradient(135deg, #ffc107 0%, #ffdb58 100%);
+            color: #333;
             padding: 2rem 1.5rem;
             border-radius: 15px 15px 0 0;
             text-align: center;
@@ -56,12 +57,12 @@
             transition: border-color 0.3s;
         }
         .form-control:focus {
-            border-color: #dc3545;
+            border-color: #ffc107;
             box-shadow: none;
             background-color: #fff;
         }
         .btn-login {
-            background-color: #dc3545;
+            background-color: #ffc107;
             border: none;
             padding: 0.75rem;
             font-weight: 700;
@@ -69,10 +70,11 @@
             width: 100%;
             margin-top: 1rem;
             transition: background-color 0.3s;
+            color: #333;
         }
         .btn-login:hover {
-            background-color: #c82333;
-            color: white;
+            background-color: #e0a800;
+            color: #333;
         }
         .alert {
             border-radius: 8px;
@@ -83,7 +85,7 @@
             margin-top: 1rem;
         }
         .forgot-password a {
-            color: #dc3545;
+            color: #ffc107;
             text-decoration: none;
             font-size: 0.9rem;
         }
@@ -97,7 +99,7 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h2>🍴 Cireng Munu'u</h2>
+                <h2> Cireng Munu'u</h2>
                 <p>Admin Dashboard</p>
             </div>
 
@@ -155,13 +157,6 @@
                         🔐 Login
                     </button>
                 </form>
-
-                <div class="forgot-password">
-                    <p class="text-secondary mb-0" style="font-size: 0.9rem;">
-                        Demo: Email: <strong>admin@example.com</strong><br>
-                        Password: <strong>password</strong>
-                    </p>
-                </div>
             </div>
         </div>
     </div>

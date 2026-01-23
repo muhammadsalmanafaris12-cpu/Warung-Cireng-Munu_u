@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Warung Cireng Munu'u - Renyah & Gurih!</title>
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYU9LwFCCN7cc2xMeJ5q9cIkhSYFgmjkm2Dmc-1eDWLlMw5xBDxnu-oArZq2mdBRyctcylOtc6H8CzoOi_-XJ1lQY6AYJRJiz75g-cLxBFPOhT91ClqY5bGYZkJ1MWgVaZt7l46Ffdz3FLbx4db2OxpcJU6xisJJu0mVN-hvPhcGSI8-ES7fdqR_smi1Dv/s1024/Gemini_Generated_Image_9c4jmm9c4jmm9c4j.png" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -11,8 +12,9 @@
         .bg-cream { background-color: #f5f5dc !important; }
         .text-dark-cream { color: #333 !important; }
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://storage.googleapis.com/orc-assets/hNIxiInq2NHR3ad4MMkjOQ/processed/d04f1634-36ae-4d1d-95a8-ec8c0e16b1bd.jpg?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=138813553141-compute%40developer.gserviceaccount.com%2F20260122%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20260122T071255Z&X-Goog-Expires=86400&X-Goog-SignedHeaders=host&X-Goog-Signature=4d303fdf177349af2833ad63ae7842e2f33a50f6a335a1618edc7f9f066708e6d30d53a3a3dffd4c0929b5eaec88229c44975a8cfe1f29ee82860b3ed1c8900a676b82b472240b507f316d2d06af8ce21363dfa6788974fc68616e9f7104382f279be2b9516683e09d197213d8502bc8e86782e4d744158c6467400a9fd13467b962cd70f4b887ba9b897084d0e165fbdd0979773b8307be409142ff5ac6946e226e39c4fc2ba28034d3b2857e5f9a9cc2e991886e638f99c64c9bb486f62cc364fb539a0650f5a2a8bfbe1f7678b6d6ec0e1e32a9dcfd5ade095858d24eb00509d4c52559cf19c5f97df20ce39016222301cc3906cd808d75eac2fb57b9b4a6');
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjlwmNHzBA4fXUYCu_OR3rDVWQDIGQXEY8zL4HBAw4gibo3mL4hGJDsaSCJ9FjqhkvcJOhfYjUARR6ljy3vuJOAWQuwgE49QYzKWbHYF097PqE2U0XX6CtiBW86r1vRFa2T869pxT6g3sGdyDSfIQA57tOun3M98-5oCEYuiGSdPZ5gFPGZ0vdLEYmZiLHP/s1006/paketkomplit.png');
             background-size: cover;
+            background-position: center;
             color: white;
             padding: 100px 0;
             text-align: center;
@@ -28,7 +30,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold text-dark-cream" href="#">Cireng Munu'u</a>
             <div class="ms-auto">
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-dark btn-sm">Admin Dashboard</a>
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-dark btn-sm">Admin</a>
             </div>
         </div>
     </nav>
