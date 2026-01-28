@@ -96,6 +96,140 @@
         .badge-success { background-color: #28a745 !important; }
         .badge-warning { background-color: #ffc107 !important; color: #333 !important; }
         .badge-danger { background-color: #dc3545 !important; }
+
+        /* Custom Confirmation Modal */
+        .confirm-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .confirm-modal.show {
+            display: flex;
+        }
+        .confirm-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .confirm-modal-content {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            width: 420px;
+            max-width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: modalSlideIn 0.3s ease;
+        }
+        @keyframes modalSlideIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .confirm-modal-header {
+            background: #ffc107;
+            padding: 35px 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .confirm-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            line-height: 1;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+        }
+        .confirm-modal-close:hover {
+            opacity: 1;
+        }
+        .confirm-modal-icon {
+            width: 70px;
+            height: 70px;
+            border: 3px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .confirm-modal-icon svg {
+            width: 35px;
+            height: 35px;
+        }
+        .confirm-modal-body {
+            padding: 30px 25px 25px;
+            text-align: center;
+        }
+        .confirm-modal-body h3 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            color: #333;
+            font-weight: 600;
+        }
+        .confirm-modal-body p {
+            margin: 0;
+            color: #999;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .confirm-modal-footer {
+            padding: 0 25px 30px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+        .confirm-modal-footer button {
+            padding: 11px 35px;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            min-width: 100px;
+        }
+        .btn-confirm-okay {
+            background: #ffc107;
+            color: white;
+        }
+        .btn-confirm-okay:hover {
+            background: #e0a800;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.4);
+        }
+        .btn-confirm-cancel {
+            background: #E57373;
+            color: white;
+        }
+        .btn-confirm-cancel:hover {
+            background: #d66363;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(229, 115, 115, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -201,10 +335,10 @@
                                         <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
                                         <td><small>{{ $order->created_at->format('d/m/Y H:i') }}</small></td>
                                         <td>
-                                            <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Yakin hapus pesanan ini?')" style="display:inline;">
+                                            <form id="deleteForm{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">🗑️</button>
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteOrder({{ $order->id }})">🗑️</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -231,6 +365,63 @@
         </div>
     </footer>
 
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <div class="confirm-modal-overlay" onclick="closeConfirmModal()"></div>
+        <div class="confirm-modal-content">
+            <div class="confirm-modal-header">
+                <button class="confirm-modal-close" onclick="closeConfirmModal()">&times;</button>
+                <div class="confirm-modal-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <circle cx="12" cy="15.5" r="0.5" fill="white"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="confirm-modal-body">
+                <h3 id="confirmTitle">Confirm Title</h3>
+                <p id="confirmMessage">Confirm Message</p>
+            </div>
+            <div class="confirm-modal-footer">
+                <button class="btn-confirm-okay" onclick="confirmAction()">Okay</button>
+                <button class="btn-confirm-cancel" onclick="closeConfirmModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let confirmCallback = null;
+
+        function showConfirmModal(title, message, callback) {
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmMessage').textContent = message;
+            document.getElementById('confirmModal').classList.add('show');
+            confirmCallback = callback;
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').classList.remove('show');
+            confirmCallback = null;
+        }
+
+        function confirmAction() {
+            if (confirmCallback) {
+                confirmCallback();
+            }
+            closeConfirmModal();
+        }
+
+        function deleteOrder(orderId) {
+            showConfirmModal(
+                'Konfirmasi Hapus',
+                'Apakah Anda yakin ingin menghapus riwayat pesanan ini?',
+                function() {
+                    document.getElementById('deleteForm' + orderId).submit();
+                }
+            );
+        }
+    </script>
 </body>
 </html>
