@@ -123,7 +123,7 @@
         <div class="container">
             <a class="navbar-brand fw-bold text-dark-cream" href="{{ route('menu') }}">Cireng Munu'u</a>
             <div class="ms-auto">
-                <a href="/" class="btn btn-outline-dark btn-sm me-2">Kembali Home</a>
+                <a href="/" class="btn btn-outline-dark btn-sm me-2">Home</a>
                 <a href="{{ route('cireng.index') }}" class="btn btn-outline-dark btn-sm">Admin</a>
             </div>
         </div>
