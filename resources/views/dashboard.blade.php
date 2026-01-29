@@ -320,7 +320,6 @@
                                     <th>Qty</th>
                                     <th>Total Harga</th>
                                     <th>Tanggal</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -331,18 +330,11 @@
                                         <td>{{ $order->nama_produk }}</td>
                                         <td><span class="badge bg-info">{{ $order->quantity }}x</span></td>
                                         <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
-                                        <td><small>{{ $order->created_at->format('d/m/Y H:i') }}</small></td>
-                                        <td>
-                                            <form id="deleteForm{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-danger btn-sm" onclick="deleteOrder({{ $order->id }})">🗑️</button>
-                                            </form>
-                                        </td>
+                                        <td><small>{{ $order->created_at->format('d/m/Y') }}</small></td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="7" class="text-center text-muted">
+                                        <td colspan="6" class="text-center text-muted">
                                             <p>📭 Belum ada pesanan</p>
                                         </td>
                                     </tr>
@@ -409,16 +401,6 @@
                 confirmCallback();
             }
             closeConfirmModal();
-        }
-
-        function deleteOrder(orderId) {
-            showConfirmModal(
-                'Konfirmasi Hapus',
-                'Apakah Anda yakin ingin menghapus riwayat pesanan ini?',
-                function() {
-                    document.getElementById('deleteForm' + orderId).submit();
-                }
-            );
         }
         
         // Prevent going back after logout
