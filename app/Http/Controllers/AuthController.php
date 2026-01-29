@@ -10,7 +10,7 @@ class AuthController extends Controller
     public function showLogin()
     {
         if (Auth::check()) {
-            return redirect()->route('cireng.index');
+            return redirect()->route('dashboard');
         }
         return view('login');
     }
@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('cireng.index'));
+            return redirect()->intended(route('dashboard'));
         }
 
         return back()->withErrors([

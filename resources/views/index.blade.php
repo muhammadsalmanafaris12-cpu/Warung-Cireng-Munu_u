@@ -98,8 +98,6 @@
             <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;">Cireng Munu'u - Admin</a>
             <div class="ms-auto">
                 <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm me-2">📊 Dashboard</a>
-                <a href="{{ route('menu') }}" class="btn btn-outline-secondary btn-sm me-2">Lihat Menu</a>
-                <a href="/" class="btn btn-outline-secondary btn-sm me-2">Home</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-warning btn-sm">🚪 Logout</button>
