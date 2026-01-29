@@ -420,6 +420,16 @@
                 }
             );
         }
+        
+        // Prevent going back after logout
+        (function() {
+            if (window.history && window.history.pushState) {
+                window.history.pushState('forward', null, '');
+                window.addEventListener('popstate', function() {
+                    window.location.href = "{{ route('dashboard') }}";
+                });
+            }
+        })();
     </script>
 </body>
 </html>

@@ -173,5 +173,16 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Prevent going back after logout
+        (function() {
+            if (window.history && window.history.pushState) {
+                window.history.pushState('forward', null, '');
+                window.addEventListener('popstate', function() {
+                    window.location.href = "{{ route('orders.index') }}";
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

@@ -76,6 +76,22 @@
             background-color: #e0a800;
             color: #333;
         }
+        .btn-home {
+            background-color: #fff;
+            border: 2px solid #ffc107;
+            padding: 0.75rem;
+            font-weight: 600;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 0.75rem;
+            transition: all 0.3s;
+            color: #ffc107;
+        }
+        .btn-home:hover {
+            background-color: #ffc107;
+            color: #333;
+            border-color: #ffc107;
+        }
         .alert {
             border-radius: 8px;
             margin-bottom: 1.5rem;
@@ -157,10 +173,28 @@
                         🔐 Login
                     </button>
                 </form>
+                
+                <div class="text-center mt-3">
+                    <a href="{{ url('/') }}" class="btn btn-home">
+                        🏠 Kembali ke Home
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Prevent going back to admin pages after logout
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+        
+        // Clear all history when on login page
+        if (performance.navigation.type === 2) {
+            location.reload(true);
+        }
+    </script>
 </body>
 </html>

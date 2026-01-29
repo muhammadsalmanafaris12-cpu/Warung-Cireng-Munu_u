@@ -23,7 +23,7 @@ Route::get('/menu', [CirengController::class, 'menu'])->name('menu');
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 
 // Halaman Dashboard Admin (Backend) - Protected
-Route::prefix('dashboard')->middleware('auth')->group(function () {
+Route::prefix('dashboard')->middleware(['auth', 'prevent.back', 'prevent.cache'])->group(function () {
     Route::get('/', [CirengController::class, 'dashboard'])->name('dashboard');
     Route::get('/kelola', [CirengController::class, 'index'])->name('cireng.index');
     Route::post('/pembeli', [CirengController::class, 'store'])->name('pembeli.store');
