@@ -236,8 +236,9 @@
 
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #f5f5dc !important;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;"> Cireng Munu'u - Admin</a>
+            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;">Cireng Munu'u - Admin</a>
             <div class="ms-auto">
+                <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary btn-sm me-2">📦 Kelola Pesanan</a>
                 <a href="{{ route('cireng.index') }}" class="btn btn-outline-secondary btn-sm me-2">✏️ Edit Menu</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
@@ -301,47 +302,6 @@
                             <small>Belum ada produk terjual</small>
                         </div>
                     @endforelse
-                </div>
-            </div>
-        </div>
-
-        <!-- DAFTAR PESANAN -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="table-orders">
-                    <h5>📋 Daftar Pesanan Terbaru</h5>
-                    <div class="table-responsive">
-                        <table class="table table-sm">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Nama Pelanggan</th>
-                                    <th>Produk</th>
-                                    <th>Qty</th>
-                                    <th>Total Harga</th>
-                                    <th>Tanggal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($orders as $index => $order)
-                                    <tr>
-                                        <td><strong>#{{ $index + 1 }}</strong></td>
-                                        <td>{{ $order->nama_pelanggan }}</td>
-                                        <td>{{ $order->nama_produk }}</td>
-                                        <td><span class="badge bg-info">{{ $order->quantity }}x</span></td>
-                                        <td>Rp {{ number_format($order->total_harga, 0, ',', '.') }}</td>
-                                        <td><small>{{ $order->created_at->format('d/m/Y') }}</small></td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center text-muted">
-                                            <p>📭 Belum ada pesanan</p>
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

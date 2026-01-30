@@ -13,7 +13,8 @@ class Order extends Model
         'quantity',
         'total_harga',
         'status',
-        'nomor_wa'
+        'nomor_wa',
+        'pesan_tambahan'
     ];
 
     public function cireng()

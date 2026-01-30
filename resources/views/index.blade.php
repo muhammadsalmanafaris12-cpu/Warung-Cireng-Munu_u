@@ -95,9 +95,10 @@
 
     <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #f5f5dc !important;">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;">Cireng Munu'u - Admin</a>
+            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}" style="color: #333 !important;">🍴 Cireng Munu'u - Admin</a>
             <div class="ms-auto">
                 <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary btn-sm me-2">📊 Dashboard</a>
+                <a href="{{ route('orders.index') }}" class="btn btn-outline-secondary btn-sm me-2">📦 Kelola Pesanan</a>
                 <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="btn btn-warning btn-sm">🚪 Logout</button>
@@ -128,10 +129,6 @@
                     <div class="col-md-6 mb-3">
                         <label for="harga" class="form-label">Harga (Rp)</label>
                         <input type="number" class="form-control" id="harga" name="harga" placeholder="12000" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="link_wa" class="form-label">Link WhatsApp</label>
-                        <input type="url" class="form-control" id="link_wa" name="link_wa" placeholder="https://wa.me/62123456789" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label for="link_img" class="form-label">Link Gambar</label>
@@ -169,10 +166,7 @@
 
                                 <!-- Action Buttons -->
                                 <div class="d-flex gap-2 mt-auto">
-                                    <a href="{{ $c->link_wa }}" target="_blank" class="btn btn-warning flex-grow-1 btn-action">
-                                         WhatsApp
-                                    </a>
-                                    <button type="button" class="btn btn-edit btn-action" 
+                                    <button type="button" class="btn btn-edit btn-action flex-grow-1" 
                                         data-bs-toggle="modal" 
                                         data-bs-target="#editModal{{ $c->id }}">
                                         ✏️ Edit
@@ -206,10 +200,6 @@
                                         <div class="mb-3">
                                             <label for="edit_harga_{{ $c->id }}" class="form-label">Harga (Rp)</label>
                                             <input type="number" class="form-control" id="edit_harga_{{ $c->id }}" name="harga" value="{{ $c->harga }}" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="edit_link_wa_{{ $c->id }}" class="form-label">Link WhatsApp</label>
-                                            <input type="url" class="form-control" id="edit_link_wa_{{ $c->id }}" name="link_wa" value="{{ $c->link_wa }}" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="edit_link_img_{{ $c->id }}" class="form-label">Link Gambar</label>

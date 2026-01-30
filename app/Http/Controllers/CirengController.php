@@ -58,7 +58,6 @@ class CirengController extends Controller
     $request->validate([
         'nama_menu' => 'required|string|max:255',
         'harga' => 'required|numeric',
-        'link_wa' => 'required|url',
         'link_img' => 'required|url',
         'deskripsi' => 'required|string',
     ]);
@@ -77,7 +76,6 @@ class CirengController extends Controller
         $validated = $request->validate([
             'nama_menu' => 'required|string|max:255',
             'harga' => 'required|numeric',
-            'link_wa' => 'required|url',
             'link_img' => 'required|url',
             'deskripsi' => 'required|string',
         ]);

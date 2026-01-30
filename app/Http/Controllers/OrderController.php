@@ -22,6 +22,10 @@ class OrderController extends Controller
             'nama_pelanggan' => 'required|string|max:255',
             'cireng_id' => 'required|exists:cirengs,id',
             'quantity' => 'required|integer|min:1',
+            'nomor_wa' => 'required|string|regex:/^[0-9]{10,15}$/',
+        ], [
+            'nomor_wa.required' => 'Nomor WhatsApp wajib diisi',
+            'nomor_wa.regex' => 'Format nomor WhatsApp tidak valid. Gunakan format 628xxx (10-15 digit)',
         ]);
 
         $cireng = Cireng::findOrFail($request->cireng_id);
@@ -33,7 +37,8 @@ class OrderController extends Controller
         $order->quantity = $request->quantity;
         $order->total_harga = $cireng->harga * $request->quantity;
         $order->status = 'Pending';
-        $order->nomor_wa = $request->nomor_wa ?? $cireng->link_wa;
+        $order->nomor_wa = $request->nomor_wa;
+        $order->pesan_tambahan = $request->pesan_tambahan;
         $order->save();
 
         // Return JSON response if it's a fetch request

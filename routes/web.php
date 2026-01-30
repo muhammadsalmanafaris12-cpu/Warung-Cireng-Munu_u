@@ -32,6 +32,6 @@ Route::prefix('dashboard')->middleware(['auth', 'prevent.back', 'prevent.cache']
     
     // Order Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    // Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus'); // Disabled - Orders are final
-    // Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy'); // Disabled - Orders cannot be deleted
+    Route::put('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 });

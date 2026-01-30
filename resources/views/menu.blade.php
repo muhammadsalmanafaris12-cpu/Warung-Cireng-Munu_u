@@ -180,22 +180,27 @@
                                             <input type="hidden" name="cireng_id" value="{{ $c->id }}">
                                             
                                             <div class="mb-3">
-                                                <label for="nama_pelanggan_{{ $c->id }}" class="form-label"> Nama Anda</label>
+                                                <label for="nama_pelanggan_{{ $c->id }}" class="form-label">👤 Nama Anda</label>
                                                 <input type="text" class="form-control" id="nama_pelanggan_{{ $c->id }}" name="nama_pelanggan" placeholder="Contoh: Budi Santoso" required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="quantity_{{ $c->id }}" class="form-label"> Jumlah Pesan</label>
+                                                <label for="nomor_wa_{{ $c->id }}" class="form-label">📱 Nomor WhatsApp</label>
+                                                <input type="tel" class="form-control" id="nomor_wa_{{ $c->id }}" name="nomor_wa" placeholder="Contoh: 08123456789" required pattern="[0-9]{10,15}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="quantity_{{ $c->id }}" class="form-label">🔢 Jumlah Pesan</label>
                                                 <input type="number" class="form-control" id="quantity_{{ $c->id }}" name="quantity" value="1" min="1" required>
                                             </div>
 
                                             <div class="mb-3">
-                                                <label for="pesan_{{ $c->id }}" class="form-label"> Pesan Tambahan (Opsional)</label>
-                                                <textarea class="form-control" id="pesan_{{ $c->id }}" rows="3" name="pesan_tambahan" placeholder="Catatan atau permintaan khusus..."></textarea>
+                                                <label for="pesan_{{ $c->id }}" class="form-label">📝 Alamat Pengantaran</label>
+                                                <textarea class="form-control" id="pesan_{{ $c->id }}" rows="3" name="pesan_tambahan" placeholder="Contoh: Kampus ULBI "></textarea>
                                             </div>
 
                                             <div class="alert alert-info small">
-                                                <strong>ℹ️ Info:</strong> Pesanan Anda akan disimpan dan dikirim ke WhatsApp
+                                                <strong>ℹ️ Info:</strong> Pesanan Anda akan langsung diproses oleh kami 
                                             </div>
 
                                             <div class="alert alert-warning small">
@@ -280,7 +285,7 @@
                 <div class="success-icon">✅</div>
                 <div class="modal-body">
                     <h5>Pesanan Berhasil!</h5>
-                    <p id="successMessage">Pesanan Anda telah disimpan dan WhatsApp akan membuka secara otomatis.</p>
+                    <p id="successMessage">Pesanan Anda telah berhasil disimpan. Kami akan segera memproses pesanan Anda.</p>
                 </div>
                 <div class="modal-footer" style="border-top: none; justify-content: center;">
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
@@ -303,13 +308,20 @@
             
             // Get form values
             const nama = document.getElementById(`nama_pelanggan_${cirengId}`).value;
+            const nomorWa = document.getElementById(`nomor_wa_${cirengId}`).value;
             const quantity = document.getElementById(`quantity_${cirengId}`).value;
             const pesan = document.getElementById(`pesan_${cirengId}`).value;
             const form = event.target;
             
             // Validate
-            if (!nama || !quantity) {
-                alert('Mohon isi nama dan jumlah pesanan!');
+            if (!nama || !nomorWa || !quantity) {
+                alert('Mohon isi semua field yang wajib (nama, nomor WhatsApp, dan jumlah)!');
+                return false;
+            }
+            
+            // Validate WhatsApp number format
+            if (!/^[0-9]{10,15}$/.test(nomorWa)) {
+                alert('Format nomor WhatsApp tidak valid! Gunakan format 628xxx (10-15 digit)');
                 return false;
             }
             
@@ -322,6 +334,7 @@
             formData.append('_token', token);
             formData.append('cireng_id', cirengId);
             formData.append('nama_pelanggan', nama);
+            formData.append('nomor_wa', nomorWa);
             formData.append('quantity', quantity);
             formData.append('pesan_tambahan', pesan);
             
@@ -342,24 +355,6 @@
             })
             .then(data => {
                 if (data.success) {
-                    // Build WhatsApp message
-                    let message = `Halo, saya ${nama}\n\n`;
-                    message += `Saya ingin memesan:\n`;
-                    message += ` Produk: ${data.nama_produk}\n`;
-                    message += ` Jumlah: ${quantity}\n`;
-                    message += ` Total: Rp ${data.total_harga_format}\n`;
-                    
-                    if (pesan && pesan.trim()) {
-                        message += `\n Catatan: ${pesan}`;
-                    }
-                    
-                    message += `\n\nTerima kasih!`;
-                    
-                    // Extract phone number from WhatsApp link
-                    const phoneNumber = whatsappLink.replace('https://wa.me/', '').split('?')[0];
-                    const encodedMessage = encodeURIComponent(message);
-                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-                    
                     // Close modal
                     const modalElement = document.getElementById(`pesanModal${cirengId}`);
                     const modal = bootstrap.Modal.getInstance(modalElement);
@@ -369,13 +364,8 @@
                     
                     // Show success modal
                     const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                    document.getElementById('successMessage').innerHTML = `✅ Pesanan untuk <strong>${data.nama_produk}</strong> berhasil disimpan!`;
+                    document.getElementById('successMessage').innerHTML = `✅ Pesanan untuk <strong>${data.nama_produk}</strong> berhasil disimpan!<br>Jumlah: ${quantity} pcs<br>Total: Rp ${data.total_harga_format}<br><br>Kami akan segera menghubungi Anda di WhatsApp: ${nomorWa}`;
                     successModal.show();
-                    
-                    // Open WhatsApp after 1.5 seconds
-                    setTimeout(() => {
-                        window.open(whatsappUrl, '_blank');
-                    }, 1500);
                     
                     // Reset form
                     form.reset();
