@@ -286,6 +286,30 @@
             </div>
         </div>
 
+        <!-- ROW BARU UNTUK STOK CIRENG -->
+        <div class="row mb-3">
+            <div class="col-md-12">
+                <div class="product-list">
+                    <h5>📦 Stok Cireng Tersedia</h5>
+                    @forelse($cirengs as $cireng)
+                        <div class="product-item">
+                            <span>{{ $cireng->nama_menu }}</span>
+                            <span class="product-number" style="{{ $cireng->stok < 10 ? 'color: #dc3545; font-weight: bold;' : '' }}">
+                                {{ $cireng->stok ?? 0 }} pcs
+                                @if($cireng->stok < 10)
+                                    <small class="text-danger">⚠️ Stok Menipis!</small>
+                                @endif
+                            </span>
+                        </div>
+                    @empty
+                        <div class="alert alert-info text-center mb-0" role="alert">
+                            <small>Belum ada menu tersedia</small>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+        </div>
+
         <!-- MAIN CONTENT -->
         <div class="row">
             <div class="col-md-4">

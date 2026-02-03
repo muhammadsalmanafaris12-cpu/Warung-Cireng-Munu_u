@@ -58,12 +58,12 @@ class CirengController extends Controller
     $request->validate([
         'nama_menu' => 'required|string|max:255',
         'harga' => 'required|numeric',
+        'stok' => 'required|numeric|min:0',
         'link_img' => 'required|url',
         'deskripsi' => 'required|string',
     ]);
 
     $data = $request->all();
-    $data['stok'] = $request->input('stok', 0); // Default stok = 0
     $data['kategori'] = $request->input('kategori', 'Snack'); // Default kategori
     
     \App\Models\Cireng::create($data);
@@ -76,6 +76,7 @@ class CirengController extends Controller
         $validated = $request->validate([
             'nama_menu' => 'required|string|max:255',
             'harga' => 'required|numeric',
+            'stok' => 'required|numeric|min:0',
             'link_img' => 'required|url',
             'deskripsi' => 'required|string',
         ]);

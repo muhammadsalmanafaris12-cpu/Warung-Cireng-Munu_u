@@ -155,13 +155,29 @@
                                         {{ $c->deskripsi ?? 'Cireng pilihan kami dengan cita rasa yang luar biasa nikmat. Dibuat dengan bahan berkualitas tinggi dan bumbu rahasia yang rahasia!' }}
                                     </p>
 
+                                    <!-- Stok Info -->
+                                    <div class="mb-2" style="font-size: 0.9rem;">
+                                        <span class="badge" style="{{ ($c->stok ?? 0) > 0 ? 'background-color: #28a745;' : 'background-color: #dc3545;' }}">
+                                            📦 Stok: {{ $c->stok ?? 0 }} tersedia
+                                        </span>
+                                        @if(($c->stok ?? 0) < 10 && ($c->stok ?? 0) > 0)
+                                            <span class="badge bg-warning text-dark">⚠️ Stok Terbatas!</span>
+                                        @endif
+                                    </div>
+
                                     <!-- Harga -->
                                     <div class="price">Rp {{ number_format($c->harga, 0, ',', '.') }}</div>
 
                                     <!-- Tombol Pesan -->
-                                    <button type="button" class="btn btn-pesan btn-danger w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#pesanModal{{ $c->id }}">
-                                        🛒 Pesan Sekarang
-                                    </button>
+                                    @if(($c->stok ?? 0) > 0)
+                                        <button type="button" class="btn btn-pesan btn-danger w-100 mt-auto" data-bs-toggle="modal" data-bs-target="#pesanModal{{ $c->id }}">
+                                            🛒 Pesan Sekarang
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-secondary w-100 mt-auto" disabled>
+                                            ❌ Stok Habis
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -191,7 +207,8 @@
 
                                             <div class="mb-3">
                                                 <label for="quantity_{{ $c->id }}" class="form-label">🔢 Jumlah Pesan</label>
-                                                <input type="number" class="form-control" id="quantity_{{ $c->id }}" name="quantity" value="1" min="1" required>
+                                                <input type="number" class="form-control" id="quantity_{{ $c->id }}" name="quantity" value="1" min="1" max="{{ $c->stok ?? 100 }}" required>
+                                                <small class="text-muted">Maksimal {{ $c->stok ?? 100 }} pcs (sesuai stok tersedia)</small>
                                             </div>
 
                                             <div class="mb-3">

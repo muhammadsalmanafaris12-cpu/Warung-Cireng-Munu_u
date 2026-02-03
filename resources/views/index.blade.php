@@ -131,6 +131,11 @@
                         <input type="number" class="form-control" id="harga" name="harga" placeholder="12000" required>
                     </div>
                     <div class="col-md-6 mb-3">
+                        <label for="stok" class="form-label">Stok Cireng</label>
+                        <input type="number" class="form-control" id="stok" name="stok" placeholder="100" min="0" required>
+                        <small class="form-text text-muted">Masukkan jumlah stok yang tersedia</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
                         <label for="link_img" class="form-label">Link Gambar</label>
                         <input type="url" class="form-control" id="link_img" name="link_img" placeholder="https://example.com/image.jpg" required>
                     </div>
@@ -162,6 +167,12 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $c->nama_menu }}</h5>
                                 <p class="card-text text-muted">{{ $c->deskripsi ?? 'Tidak ada deskripsi' }}</p>
+                                <div class="mb-2">
+                                    <small class="text-secondary">📦 Stok: <strong>{{ $c->stok ?? 0 }}</strong> pcs</small>
+                                    @if(($c->stok ?? 0) < 10)
+                                        <span class="badge bg-danger ms-1">Stok Menipis!</span>
+                                    @endif
+                                </div>
                                 <div class="price">Rp {{ number_format($c->harga, 0, ',', '.') }}</div>
 
                                 <!-- Action Buttons -->
@@ -200,6 +211,11 @@
                                         <div class="mb-3">
                                             <label for="edit_harga_{{ $c->id }}" class="form-label">Harga (Rp)</label>
                                             <input type="number" class="form-control" id="edit_harga_{{ $c->id }}" name="harga" value="{{ $c->harga }}" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="edit_stok_{{ $c->id }}" class="form-label">Stok Cireng</label>
+                                            <input type="number" class="form-control" id="edit_stok_{{ $c->id }}" name="stok" value="{{ $c->stok ?? 0 }}" min="0" required>
+                                            <small class="form-text text-muted">Jumlah stok yang tersedia</small>
                                         </div>
                                         <div class="mb-3">
                                             <label for="edit_link_img_{{ $c->id }}" class="form-label">Link Gambar</label>
